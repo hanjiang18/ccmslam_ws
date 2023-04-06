@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -O3 -DNDEBUG -shared -Wl,-soname,libgtest_main.so -o libgtest_main.so CMakeFiles/gtest_main.dir/src/gtest_main.cc.o   -L/home/ccm/ccmslam_ws/build/ccmslam_msgs/gtest/googlemock/gtest/src  -Wl,-rpath,/home/ccm/ccmslam_ws/build/ccmslam_msgs/gtest/googlemock/gtest/src:/home/ccm/ccmslam_ws/build/ccmslam_msgs/gtest/googlemock/gtest -lpthread libgtest.so -lpthread 

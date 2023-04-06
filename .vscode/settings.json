@@ -1,0 +1,35 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/ccm/ccmslam_ws/devel/lib/python2.7/dist-packages",
+        "/opt/ros/melodic/lib/python2.7/dist-packages"
+    ],
+    "files.associations": {
+        "ostream": "cpp",
+        "condition_variable": "cpp",
+        "algorithm": "cpp",
+        "new": "cpp",
+        "random": "cpp",
+        "iostream": "cpp",
+        "thread": "cpp",
+        "*.ipp": "cpp",
+        "array": "cpp",
+        "regex": "cpp",
+        "string_view": "cpp",
+        "*.tcc": "cpp",
+        "optional": "cpp",
+        "cmath": "cpp",
+        "*.txx": "cpp",
+        "mutex": "cpp",
+        "bitset": "cpp",
+        "initializer_list": "cpp",
+        "valarray": "cpp",
+        "utility": "cpp",
+        "core": "cpp"
+    },
+    "python.analysis.extraPaths": [
+        "/home/ccm/ccmslam_ws/devel/lib/python2.7/dist-packages",
+        "/opt/ros/melodic/lib/python2.7/dist-packages"
+    ],
+    "ros.distro": "melodic",
+    "commentTranslate.targetLanguage": "zh-CN"
+}

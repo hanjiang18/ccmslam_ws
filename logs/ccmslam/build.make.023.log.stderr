@@ -1,0 +1,14 @@
+In file included from [01m[K/home/ccm/ccmslam_ws/src/ccm_slam-master/cslam/src/pointcloudmapping.cpp:1:0[m[K:
+[01m[K/home/ccm/ccmslam_ws/src/ccm_slam-master/cslam/include/cslam/pointcloudmapping.h:4:10:[m[K [01;31m[Kfatal error: [m[KSystem.h: 没有那个文件或目录
+ #include [01;31m[K"System.h"[m[K
+          [01;31m[K^~~~~~~~~~[m[K
+compilation terminated.
+make[2]: *** [CMakeFiles/ccmslam_lib.dir/src/pointcloudmapping.cpp.o] Error 1
+make[2]: *** 正在等待未完成的任务....
+[01m[K/home/ccm/ccmslam_ws/src/ccm_slam-master/cslam/src/pointCloud.cpp:4:26:[m[K [01;31m[Kerror: [m[Kdefinition of implicitly-declared ‘[01m[Kcslam::PointCloude::PointCloude()[m[K’
+ PointCloude::PointCloude([01;31m[K)[m[K{}
+                          [01;31m[K^[m[K
+compilation terminated due to -Wfatal-errors.
+make[2]: *** [CMakeFiles/ccmslam_lib.dir/src/pointCloud.cpp.o] Error 1
+make[1]: *** [CMakeFiles/ccmslam_lib.dir/all] Error 2
+make: *** [all] Error 2

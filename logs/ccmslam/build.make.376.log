@@ -1,0 +1,16 @@
+[  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target std_msgs_generate_messages_cpp
+[  0%] Built target std_msgs_generate_messages_eus
+[  0%] Built target std_msgs_generate_messages_lisp
+[  0%] Built target ccmslam_msgs_generate_messages_cpp
+[  0%] Built target std_msgs_generate_messages_nodejs
+[  0%] Built target _ccmslam_generate_messages_check_deps_ServiceSaveMap
+[ 13%] Built target ccmslam_generate_messages_py
+[ 13%] Built target ccmslam_generate_messages_cpp
+[ 13%] Built target ccmslam_generate_messages_eus
+[ 18%] Built target ccmslam_generate_messages_nodejs
+[ 18%] Built target ccmslam_generate_messages_lisp
+[ 18%] Built target ccmslam_generate_messages
+[ 84%] Built target ccmslam_lib
+[ 92%] Built target ccmslamClientNode
+[100%] Built target ccmslamServerNode
