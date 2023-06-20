@@ -164,6 +164,7 @@ void LocalMapping::RunServer()
             if(params::mapping::mfRedundancyThres < 1.0 && !CheckNewKeyFrames())
             {
                 KeyFrameCullingV3();
+                //mpMap->RemoveRedundantData(0,0);
             }
 
             mpLoopFinder->InsertKF(mpCurrentKeyFrame);
@@ -829,7 +830,8 @@ void LocalMapping::MapPointCullingServer()
     }
 }
 
-void LocalMapping::KeyFrameCullingV3()
+int sum=0;
+void LocalMapping::KeyFrameCullingV3()  
 {
     //This version: randomly pick a KF and check for redundancy
     kfptr pKFc = mpMap->GetRandKfPtr();
@@ -862,9 +864,12 @@ void LocalMapping::KeyFrameCullingV3()
     // We only consider close stereo points
     vector<kfptr> vpLocalKeyFrames = pKFc->GetVectorCovisibleKeyFrames();
 
+    //vector<kfptr> vpLocalKeyFrames =mpCurrentKeyFrame->GetVectorCovisibleKeyFrames();
+
     for(vector<kfptr>::iterator vit=vpLocalKeyFrames.begin(), vend=vpLocalKeyFrames.end(); vit!=vend; vit++)
     {
         kfptr pKF = *vit;
+        
         if(pKF->mId.first==0 || pKF->mId.first==1) //don't cull 0, since it's the origin, and also not one, because this was the other KF used for initialization. The systen won't experience problems if culling 1, nevetheless we don't do it.
             continue;
 
@@ -883,6 +888,8 @@ void LocalMapping::KeyFrameCullingV3()
             {
                 if(!pMP->isBad())
                 {
+                     if(pKF->passDepth[i]>40.0 || pKF->passDepth[i]<0)
+                             continue;
                     nMPs++;
                     if(pMP->Observations()>thObs)
                     {
@@ -914,10 +921,12 @@ void LocalMapping::KeyFrameCullingV3()
                 }
             }
         }
-
+        
+        //cout<<"mapping culling : "<<pKF->mId.first<<" "<<pKF->mId.second<<"redundant "<<nRedundantObservations<<"0.9nmaps : "<<0.9*nMPs<<endl;
         if(nRedundantObservations>params::mapping::mfRedundancyThres*nMPs)
         {
             pKF->SetBadFlag();
+            //cout<<"kf culling : "<<pKF->mId.first<<" "<<pKF->mId.second<<"  "<<++sum<<endl;
             ++mCulledKfs;
         }
     }

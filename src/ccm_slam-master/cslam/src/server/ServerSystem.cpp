@@ -32,10 +32,10 @@ ServerSystem::ServerSystem(ros::NodeHandle Nh, ros::NodeHandle NhPrivate, const 
     //params::ShowParams();
 
     mNhPrivate.param("NumOfClients",mNumOfClients,0);
-    //cout<<"NumOfCl:------------------------- "<<mNumOfClients<<endl;
+    cout<<"NumOfCl:------------------------- "<<mNumOfClients<<endl;
     mServiceSavemap = mNh.advertiseService("ccmslam_savemap",&ServerSystem::CallbackSaveMap, this);
-
-    if(mNumOfClients < 1)
+    //mServicekfculling=mNh.advertiseService("ccmslam_prunemap",&ServerSystem::Callbackprunemap, this);
+    if( mNumOfClients < 1)
     {
         ROS_ERROR_STREAM("In \" System::System(...)\": Num od clients < 1");
         throw estd::infrastructure_ex();
@@ -43,7 +43,13 @@ ServerSystem::ServerSystem(ros::NodeHandle Nh, ros::NodeHandle NhPrivate, const 
 
     //+++++ load vocabulary +++++
     //my add pc thread
-    mpPointCloudMapping = boost::make_shared<PointCloudMapping>( 0.01,50,2.0);
+     cv::FileStorage fSettings("/home/ccm/ccmslam_ws/src/ccm_slam-master/cslam/conf/config.yaml", cv::FileStorage::READ);
+
+    float res = fSettings["PointCloud.res"];
+    float meank = fSettings["PointCLoud.meank"];
+    float thresh = fSettings["PointCLoud.thresh"];
+    mpPointCloudMapping = boost::make_shared<PointCloudMapping>( res,meank,thresh );
+    //mpPointCloudMapping = boost::make_shared<PointCloudMapping>( 0.3,50,0.2 );
     this->LoadVocabulary(strVocFile);
 
     //+++++ Create KeyFrame Database +++++
@@ -78,7 +84,10 @@ bool ServerSystem::CallbackSaveMap(ccmslam::ServiceSaveMap::Request &req, ccmsla
     std::cout << "----> Done" << std::endl;
     return true;
 }
+ //my add kfculling
+bool ServerSystem::Callbackprunemap(){
 
+}
 void ServerSystem::InitializeClients()
 {
     //Cannot be called from constructor - shared_from_this() not available
@@ -192,7 +201,7 @@ void ServerSystem::InitializeMapMatcher()
 {
     mpMapMatcher.reset(new MapMatcher(mNh,mNhPrivate,mpKFDB,mpVoc,mpMap0,mpMap1,mpMap2,mpMap3,mpPointCloudMapping));
     mptMapMatching.reset(new thread(&MapMatcher::Run,mpMapMatcher));
-
+    //只有一个mapmatcher
     if(mpClient0) mpClient0->SetMapMatcher(mpMapMatcher);
     if(mpClient1) mpClient1->SetMapMatcher(mpMapMatcher);
     if(mpClient2) mpClient2->SetMapMatcher(mpMapMatcher);
@@ -219,6 +228,11 @@ void ServerSystem::CleanWriteOutFile(string sFileName)
     std::ofstream keyframesFile;
     keyframesFile.open(sFileName, std::ofstream::out | std::ofstream::trunc);
     keyframesFile.close();
+}
+
+void ServerSystem::save()
+{
+    mpPointCloudMapping->save();
 }
 
 } //end namespace

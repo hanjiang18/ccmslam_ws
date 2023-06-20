@@ -815,6 +815,7 @@ void Communicator::ProcessKfInClient()
 void Communicator::ProcessKfInServer()
 {
     int ItCount = 0;
+    //cout<<"buffer size: "<<mlBufKFin.size() << endl;
 
     while (!mlBufKFin.empty() && (ItCount < mKfItBound))
     {
@@ -952,6 +953,21 @@ void Communicator::ProcessKfInServer()
         }
 
         ++ItCount;
+
+        //my add kfculling
+        mpMap->mpKFDB=mpDatabase;
+        int thre=0;
+        if(mpMap->isfused==true)
+            thre=300;
+        else
+            thre=150;
+
+       // cout<<"thre : "<<thre<<endl;
+        if(mpMap->GetMmpKeyFrames().size()>300){
+            mpMap->RemoveRedundantData(0,0);
+            //cout<<"start: "<<mpMap->GetMmpKeyFrames().size()<<endl;
+        }
+            
 
         #ifndef HIDEBUFFERLIMITS
         if(ItCount == mKfItBound)

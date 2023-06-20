@@ -70,11 +70,14 @@ public:
     ServerSystem(ros::NodeHandle Nh, ros::NodeHandle NhPrivate, const string &strVocFile);
     void InitializeClients();
     void InitializeMapMatcher();
+    void save();
+
 
     bool CallbackSaveMap(ccmslam::ServiceSaveMap::Request &req, ccmslam::ServiceSaveMap::Response &res);
 
     //my add
     pcmptr mpPointCloudMapping;
+     string strname;
     //----------
 private:
     void LoadVocabulary(const string &strVocFile);
@@ -82,7 +85,7 @@ private:
     void InitializeKFDB();
     void InitializeMapping();
     void InitializeViewer();
-
+   
     void CleanWriteOutFile(std::string sFileName);
 
     //ROS infrastructure
@@ -90,6 +93,10 @@ private:
     ros::NodeHandle mNhPrivate;
 
     ros::ServiceServer mServiceSavemap;
+    //my add kfculling
+    ros::ServiceServer mServicekfculling;
+    bool Callbackprunemap();
+   
 
     vocptr mpVoc;
     dbptr mpKFDB;

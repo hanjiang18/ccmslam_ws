@@ -1,3 +1,11 @@
+/*
+ * @Author: hanjiang18 1763983820@qq.com
+ * @Date: 2023-03-13 01:50:05
+ * @LastEditors: hanjiang18 1763983820@qq.com
+ * @LastEditTime: 2023-06-13 03:13:18
+ * @FilePath: /ccmslam_ws/src/ccm_slam-master/cslam/src/server/ServerNode.cpp
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 /**
 * This file is part of CCM-SLAM.
 *
@@ -28,7 +36,9 @@
 int main(int argc, char **argv) {
 
     ros::init(argc, argv, "CSLAM server node");
-
+    for(int i = 0; i <argc; i++) {
+        cout<<argv[i]<<endl;
+    }
     if(argc != 2)
     {
         cerr << endl << "Usage: rosrun cslam clientnode path_to_vocabulary" << endl;
@@ -40,6 +50,8 @@ int main(int argc, char **argv) {
     ros::NodeHandle NhPrivate("~");
 
     boost::shared_ptr<cslam::ServerSystem> pSSys{new cslam::ServerSystem(Nh,NhPrivate,argv[1])};
+   
+    // pSSys->strname=argv[2];
     pSSys->InitializeClients();
 
 
@@ -47,7 +59,8 @@ int main(int argc, char **argv) {
 
     ros::MultiThreadedSpinner MSpin(2);
 
-        MSpin.spin();
+    MSpin.spin();
+    pSSys->save();
 
     ros::waitForShutdown();
 
